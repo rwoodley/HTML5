@@ -4,10 +4,35 @@ var currX = -1, currY = -1, currRing = 2;
 var centerX = 330, centerY = 330, scaleFactor = .3;
 var angles = new Array();
 
+// from a stack overflow post, how to get the upper right coords of the canvas element.
+function relMouseCoords(event){
+    var totalOffsetX = 0;
+    var totalOffsetY = 0;
+    var canvasX = 0;
+    var canvasY = 0;
+    var currentElement = this;
+
+    do{
+        totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
+        totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+    }
+    while(currentElement = currentElement.offsetParent)
+
+    canvasX = event.pageX - totalOffsetX;
+    canvasY = event.pageY - totalOffsetY;
+
+    canvasX = Math.round( canvasX * (this.width / this.offsetWidth) );
+    canvasY = Math.round( canvasY * (this.height / this.offsetHeight) );
+
+    return {x:canvasX, y:canvasY}
+}
+HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
+
 function initDiagram() {
 
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
+
 
     canvas.addEventListener("touchstart", function (e) { iEventHandler('down', e) }, false);
     canvas.addEventListener("touchmove", function (e) {
@@ -42,11 +67,12 @@ function iEventHandler(res, e) {
     handleUserEvent(res, ev.clientX, ev.clientY);
 }
 function eventHandler(res, e) {
-    handleUserEvent(res, e.clientX, e.clientY);
+    coords = canvas.relMouseCoords(e);
+    //debugText(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop, coords.x, coords.y, e.offsetX, e.offsetY);
+    handleUserEvent(res, coords.x, coords.y);
 }
 var startAngle = 0;
 function handleUserEvent(res, clientX, clientY) {
-    //debugText(res, angles[1], angles[2], angles[3], currX, currY);
 
     if (res == 'down') {
         scrolling = 1;
