@@ -260,7 +260,7 @@ $(document).ready(function () {
     document.getElementById("testText").innerHTML = "";
     var nCanvas = 4;
     var b = document.getElementsByTagName('body')[0];
-    var cw = (b.clientWidth-nCanvas*8)/nCanvas;
+    var cw = b.clientWidth/nCanvas-12;
     //alert(cw);
     var canvas = $("#lcanvas");
     canvas.height(cw);    canvas.width(cw);
@@ -286,8 +286,8 @@ $(document).ready(function () {
   <i>Examples: <br/>
     2x3=<br/>
     12/3=<br/>
+  </i>
   </p>
-<p/>
   <table >
   <tr>
     <td colspan='4'>
