@@ -281,15 +281,25 @@ $(document).ready(function () {
     rr = Raphael(canvas.attr('id'), canvas.width(), canvas.height());
 });
 </script>
-<br/>
+<h3>Dot Calculator</h3>
+<p>Enter in any simple multiplication or division expression, followed by equals sign (=).<br/>
+  <i>Examples: <br/>
+    2x3=<br/>
+    12/3=<br/>
+  </p>
+<p/>
   <table >
   <tr>
     <td colspan='4'>
       <div style="float: left;">
       <input id="edValue" type="text" autofocus="autofocus" onkeypress="return myKeyPress(event)"><br/>
       </div>
-      <div style="float: right;" id="testText"></div>
-      
+      <div style="float: right;" id="testText"></div>      
+    </td>
+  </tr>
+  <tr>
+    <td colspan='4'>
+      <p/>
     </td>
   </tr>
   <tr>
