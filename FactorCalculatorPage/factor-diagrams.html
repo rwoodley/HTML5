@@ -159,7 +159,7 @@ function draw3Numbers(i1,i2,i3) {
     drawNumber(r2, rcanvas, i2);
     var canvas = $("#canvas");
     drawNumber(r3, canvas, i3);
-    //alert(i1 + "," + i2 + "," + i3);
+    drawNumber(rr, canvas, 0);
 }
 function draw4Numbers(i1,i2,i3,i4) {
     var lcanvas = $("#lcanvas");
@@ -170,7 +170,6 @@ function draw4Numbers(i1,i2,i3,i4) {
     drawNumber(r3, canvas, i3);
     var canvas2 = $("#canvas");
     drawNumber(rr, canvas, i4);
-    //alert(i1 + "," + i2 + "," + i3);
 }
 function drawNumber(r, canvas, num) {
     r.clear();
@@ -198,7 +197,7 @@ function myKeyPress(e)
   var chr = String.fromCharCode(keynum);
 
   if ((chr < '0' || chr > '9') && keynum != 8 && chr != 'x' && chr !='/' && chr != '=') {
-    e.preventDefault();
+    e.preventDefault ? e.preventDefault() : e.returnValue = false;
     return;
   }
   
@@ -213,9 +212,9 @@ function myKeyPress(e)
   else
     s = edValue.value+chr;
   var numbers = s.split(/\/|x|=/);
-  if (numbers.length >= 3)  {
+  if ((window.event && numbers.length >= 2 && chr == '=') || numbers.length >= 3)  {	// split behaves differently for IR
     if (chr != '=') {
-      e.preventDefault();
+      e.preventDefault ? e.preventDefault() : e.returnValue = false;
       return; // last char must be an = sign.
     }
     var i1 = numbers[0];
@@ -238,13 +237,13 @@ function myKeyPress(e)
         document.getElementById("testText").innerHTML = edValue.value + chr + result;
     }
     edValue.value = "";
-    e.preventDefault();
+    e.preventDefault ? e.preventDefault() : e.returnValue = false;
     return;
   }
 //  var lastChar = edValue.value.substring(edValue.value.length-1);
 //  alert(lastChar);
   if (chr == '=') {
-    e.preventDefault(); return;
+    e.preventDefault ? e.preventDefault() : e.returnValue = false; return;
   }
   if (numbers.length >= 2 && numbers[1].length > 0) {
     draw3Numbers(numbers[0],numbers[1],0);
