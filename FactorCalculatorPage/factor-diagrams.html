@@ -1,7 +1,8 @@
 <!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN">
 <html><head>
+<meta name="description" content="The Dot Calculator is a fun and visual way to teach children multiplication, division and factorization." />
 <meta http-equiv="content-type" content="text/html; charset=windows-1252">
-<title></title>
+<title>Factor Calculator</title>
 <script type="text/javascript" src="factor-diagrams_files/jquery-1.js"></script>
 <script type="text/javascript" src="factor-diagrams_files/raphael-min.js"></script>
 </head>
@@ -260,6 +261,7 @@ $(document).ready(function () {
     var nCanvas = 4;
     var b = document.getElementsByTagName('body')[0];
     var cw = b.clientWidth/nCanvas-12;
+//    var cw = 200;
     //alert(cw);
     var canvas = $("#lcanvas");
     canvas.height(cw);    canvas.width(cw);
@@ -304,34 +306,39 @@ $(document).ready(function () {
   <tr>
     <td >
       <div id="lcanvas" style="background: lightgrey;">
-        <svg style="overflow: hidden; position: relative;" xmlns="http://www.w3.org/2000/svg" version="1.1" >
-          <defs></defs>
-        </svg>
+        
       </div>
     </td>
     <td >
       <div id="rcanvas" style="background: lightgrey;">
-        <svg style="overflow: hidden; position: relative;" xmlns="http://www.w3.org/2000/svg" version="1.1" >
-          <defs></defs>
-        </svg>
+        
       </div>
     </td>
     <td >
       <div id="canvas" style="background: yellow;">
-        <svg style="overflow: hidden; position: relative;" xmlns="http://www.w3.org/2000/svg" version="1.1" >
-          <defs></defs>
-        </svg>
+        
       </div>
     </td>
     <td >
       <div id="canvas2" style="background: beige;">
-        <svg style="overflow: hidden; position: relative;" xmlns="http://www.w3.org/2000/svg"  version="1.1" >
-          <defs></defs>
-        </svg>
+        
       </div>
     </td>
   </tr>
+  <tr>
+    <td colspan=4>
+      <div style="float: right;z-index:222;" >
+        <a href="http://twitter.com/share?text=The%20Dot%20Calculator%20is%20a%20fun%20and%20visual%20way%20to%20teach%20children%20multiplication,%20division%20and%20factorization.&url=http://rwoodley.org/MyContent/HTML5/FactorCalculatorPage/factor-diagrams.html" target="_blank">
+          <img src="Resources/twitter_32.png" title="Share on Twitter" alt="Share on Twitter"/></a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=rwoodley.org/MyContent/HTML5/FactorCalculatorPage/factor-diagrams.html" target="_blank">
+          <img src="Resources/facebook_32.png" title="Share on Facebook" alt="Share on Facebook"/>
+        </a>
+        
+      </div>
+      
+    </td>
+  </tr>
 </table>
-
+<p/>
 
 </body></html>
