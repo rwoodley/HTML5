@@ -224,15 +224,19 @@ function myKeyPress(e)
     return;
   }
   _currentNumber = _currentNumber/s;
-  //if (Diagram.factor(_currentNumber).length == 1) {
-  if (_currentNumber == 1) {
-    alert("Good job! You did it!");
-  }
+  _userFactors.push(s);
+  updateStatus();
   drawNumber();
+  if (_currentNumber == 1) {
+    _timerOn = false;
+    alert("Good job! You did it! Time: " + _timeCount);
+    document.getElementById("Timer").innerHTML="";
+  }
   edValue.value = "";
 }
 var _startNumber = 144;
 var _currentNumber;
+var _userFactors;
 var rap;
 $(document).ready(function () {
     document.getElementById("edValue").value = "";
@@ -246,36 +250,97 @@ $(document).ready(function () {
     if (cw > ch) cw = ch; 
     canvas.height(cw);    canvas.width(cw);
     rap = Raphael(canvas.attr('id'), canvas.width(), canvas.height());
-
-    _currentNumber = 66;
-    drawNumber();
+    _minRand = 50;
+    _maxRand = 500;
+    newGame();
 
 });
+function updateStatus() {
+  var text = "<nobr>";
+  text += _startNumber + " = ";
+  if (_userFactors.length == 0)
+    text += "1 x ";
+  for (i in _userFactors) {
+    text += _userFactors[i] + " x ";
+  }
+
+  text += _currentNumber;
+  text += "</nobr>";
+  document.getElementById("Status").innerHTML = text;
+}
+var _timeCount;
+var _timerOn;
+var _minRand, _maxRand;
+
+function newGame()
+{
+  _timerOn = false;
+  document.getElementById("Timer").innerHTML="Get ready...";
+
+  document.getElementById("edValue").focus();
+  setTimeout("startNewGame()",2000);
+}
+function startNewGame() {
+    
+  _startNumber = Math.floor(Math.random()*(_maxRand - _minRand)) + _minRand;
+  _currentNumber = _startNumber;
+  drawNumber();
+  _userFactors = new Array();
+  updateStatus();
+  _timeCount = 0;
+  _timerOn = true;
+  timer();
+}
+function timer(){
+  if (!_timerOn) return;
+  _timeCount=_timeCount+1;
+  document.getElementById("Timer").innerHTML="Time is " + _timeCount;
+  setTimeout("timer()",1000);
+}
 </script>
 <h3>Factor Race</h3>
   <table height="100%" width="100%">
   <tr>
     <td width="100px" height="100%" valign="top">
-      <input id="edValue" type="text" autofocus="autofocus" onkeypress="return myKeyPress(event)"><br/>
-      <div  id="testText"></div>      
+      <table>
+        <tr>
+          <td>
+            <input id="edValue" type="text" autofocus="autofocus" onkeypress="return myKeyPress(event)"><br/>
+            <div  id="testText"></div>                  
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="Status"></div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="Timer"></div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button onclick="newGame()">New Game</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="float: right;z-index:222;" >
+              <a href="http://twitter.com/share?text=The%20Dot%20Calculator%20is%20a%20fun%20and%20visual%20way%20to%20teach%20children%20multiplication,%20division%20and%20factorization.&url=http://rwoodley.org/MyContent/HTML5/FactorCalculatorPage/factor-diagrams.html" target="_blank">
+                <img src="Resources/twitter_32.png" title="Share on Twitter" alt="Share on Twitter"/></a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=rwoodley.org/MyContent/HTML5/FactorCalculatorPage/factor-diagrams.html" target="_blank">
+                <img src="Resources/facebook_32.png" title="Share on Facebook" alt="Share on Facebook"/>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </table>
     </td>
     <td valign="top">
       <div id="canvas" style="background: yellow; width: 90%; height: 90%;">
         
       </div>
-    </td>
-  </tr>
-  <tr>
-    <td colspan=2>
-      <div style="float: right;z-index:222;" >
-        <a href="http://twitter.com/share?text=The%20Dot%20Calculator%20is%20a%20fun%20and%20visual%20way%20to%20teach%20children%20multiplication,%20division%20and%20factorization.&url=http://rwoodley.org/MyContent/HTML5/FactorCalculatorPage/factor-diagrams.html" target="_blank">
-          <img src="Resources/twitter_32.png" title="Share on Twitter" alt="Share on Twitter"/></a>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=rwoodley.org/MyContent/HTML5/FactorCalculatorPage/factor-diagrams.html" target="_blank">
-          <img src="Resources/facebook_32.png" title="Share on Facebook" alt="Share on Facebook"/>
-        </a>
-        
-      </div>
-      
     </td>
   </tr>
 </table>
