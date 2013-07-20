@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html style='width: 100%; height: 100%;'>
+  <head>
+<title>Factor Calculator</title>
+<script>
+var _fileArray;
+var _index = 0;
+function makeRequest() {
+    var httprequest = new XMLHttpRequest();
+    httprequest.open("GET", "https://dl.dropboxusercontent.com/s/apsolpke9zszoo8/SlideShow.txt", true);
+    httprequest.onreadystatechange = function () {
+        //alert(httprequest.readyState + "," + httprequest.status);
+        if (httprequest.readyState == 4) {
+            //if (httprequest.status == 200) {
+              var fileContent = httprequest.responseText;
+              _fileArray = fileContent.split('\n');
+              slideshow();
+            //}
+        }
+    };
+    httprequest.send(null);
+}
+function slideshow() {
+
+  var i = _index % _fileArray.length;
+  var img = document.getElementById('thePic');
+  img.src = _fileArray[i];
+  console.log(img.width + "," +img.height);
+  /*
+  var thediv = document.getElementById('container');
+  console.log("thediv= " + thediv.height + "x" + thediv.width);
+  var pw = thediv.parentNode.clientWidth;
+  var ph = thediv.parentNode.clientHeight;
+  console.log("pw,ph=" + pw + "," + ph);
+  thediv.height = ph - 2 * thediv.offsetTop;
+  thediv.width = pw - 2 * thediv.offsetLeft;
+  img.height = thediv.height - 2*img.offsetTop;
+  img.width = thediv.width - 2*img.offsetLeft;
+  console.log("thediv= " + thediv.height + "x" + thediv.width);
+  console.log(img.width + "," +img.height);
+  */
+  _index++;
+  setTimeout(slideshow,5000);
+}
+</script>
+
+</head>
+<body onload='makeRequest()' style='width:100%; height:100%'>
+<img id="thePic" style="max-height: 100%; max-width: 100%;"></img>
+</body>
+</html>
