@@ -280,9 +280,20 @@ function newGame()
   document.getElementById("edValue").focus();
   setTimeout("startNewGame()",2000);
 }
+function isPrime(n) {
+ if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false; 
+ if (n%2==0) return (n==2);
+ var m=Math.sqrt(n);
+ for (var i=3;i<=m;i+=2) {
+  if (n%i==0) return false;
+ }
+ return true;
+}
 function startNewGame() {
-    
-  _startNumber = Math.floor(Math.random()*(_maxRand - _minRand)) + _minRand;
+  _startNumber = 13;
+  while (isPrime(_startNumber)) {
+    _startNumber = Math.floor(Math.random()*(_maxRand - _minRand)) + _minRand;
+  }
   _currentNumber = _startNumber;
   drawNumber();
   _userFactors = new Array();
@@ -316,7 +327,7 @@ function timer(){
         </tr>
         <tr>
           <td>
-            <div id="Timer"></div>
+            <b><div id="Timer"></div></b>
           </td>
         </tr>
         <tr>
