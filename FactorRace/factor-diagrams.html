@@ -5,6 +5,28 @@
 <title>Factorization Race!</title>
 <script type="text/javascript" src="factor-diagrams_files/jquery-1.js"></script>
 <script type="text/javascript" src="factor-diagrams_files/raphael-min.js"></script>
+<style>
+<!--
+.list_carousel ul {
+	margin: 0;
+	padding: 10 0 0 0;
+	list-style: none;
+	display: block;
+}
+.list_carousel li {
+	cursor: hand; cursor: pointer;
+	font-size: 15px;
+	color: #666;
+	text-align: left;
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	width: 150px;
+	padding: 0;
+	display: block;
+	float: left;
+}
+-->
+</style>
 </head>
 
 <body>
@@ -229,14 +251,26 @@ function myKeyPress(e)
   drawNumber();
   if (_currentNumber == 1) {
     _timerOn = false;
-    alert("Good job! You did it! Time: " + _timeCount);
     document.getElementById("Timer").innerHTML="";
+
+    _nGames++;
+    var listElement = document.getElementById("scoreList");
+    var listItem = document.createElement("li");
+    listItem.innerHTML = "Game " + _nGames + ", time = " + _timeCount;
+    listElement.appendChild(listItem);
+    _totalScore += _timeCount;
+    var listElement = document.getElementById("totalScore");
+    listElement.innerHTML = _nGames + " Games in " + _totalScore  + " seconds"; 
+
+    alert("Good job! You did it! Time: " + _timeCount + "\nClick 'New Game' to play a new game." );
   }
   edValue.value = "";
 }
 var _startNumber = 144;
 var _currentNumber;
 var _userFactors;
+var _nGames = 0;
+var _totalScore = 0;
 var rap;
 $(document).ready(function () {
     document.getElementById("edValue").value = "";
@@ -280,9 +314,20 @@ function newGame()
   document.getElementById("edValue").focus();
   setTimeout("startNewGame()",2000);
 }
+function isPrime(n) {
+ if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false; 
+ if (n%2==0) return (n==2);
+ var m=Math.sqrt(n);
+ for (var i=3;i<=m;i+=2) {
+  if (n%i==0) return false;
+ }
+ return true;
+}
 function startNewGame() {
-    
-  _startNumber = Math.floor(Math.random()*(_maxRand - _minRand)) + _minRand;
+  _startNumber = 13;
+  while (isPrime(_startNumber)) {
+    _startNumber = Math.floor(Math.random()*(_maxRand - _minRand)) + _minRand;
+  }    
   _currentNumber = _startNumber;
   drawNumber();
   _userFactors = new Array();
@@ -296,6 +341,12 @@ function timer(){
   _timeCount=_timeCount+1;
   document.getElementById("Timer").innerHTML="Time is " + _timeCount;
   setTimeout("timer()",1000);
+}
+function showInstructions() {
+    var did = document.getElementById("instructions").style.display = "block";
+}
+function hideInstructions() {
+    var did = document.getElementById("instructions").style.display = "none";
 }
 </script>
 <h3>Factor Race</h3>
@@ -324,6 +375,21 @@ function timer(){
             <button onclick="newGame()">New Game</button>
           </td>
         </tr>
+        <tr>
+          <td>
+            <button onclick="showInstructions()">Instructions</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div  class="list_carousel" >
+              <ul id='scoreList'>
+                <li><b>Score Board</b></li>
+                <li id='totalScore'></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
       </table>
     </td>
     <td valign="top">
@@ -334,5 +400,20 @@ function timer(){
   </tr>
 </table>
 <p/>
-
+<div id="instructions" style="display: none; position:absolute; top:120px; left: 260px; width:400px; height: 400px; border:solid 1px; background: lightgrey; padding: 6;">
+<h3>Instructions</h3>
+Press 'New Game'. The page will display a number in the big yellow square. Your job is to enter the number's prime factors as quickly as you can!
+The clock is ticking! Hit enter after typing in each factor.<p/>
+<p/>
+When you are done, the page will say 'Good job!' and show you how long it took. It will show the original number as well as
+its prime factors 
+<p/>
+Hints: Look at the diagram in the yellow box. You can see the prime factors by looking at the way the dots are arranged.
+For instance if you see 3 dots in a triangle, you can bet that 3 is a prime factor.
+<p/>
+Some numbers are easy and fast to factor, some are harder and take more thought. Try doing 5 in a row and then compare your total
+time with your friends.
+<p/>
+<button onclick="hideInstructions()">Hide Instructions</button>
+</div>
 </body></html>
