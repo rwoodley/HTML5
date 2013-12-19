@@ -8,6 +8,17 @@
 </head>
 
 <body>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+          ga('create', 'UA-41066114-1', 'rwoodley.org');
+          ga('send', 'pageview');
+        
+        </script>
+
 <script>
 
   var FONT_SIZE = 128;
@@ -197,7 +208,7 @@ function myKeyPress(e)
   }
   var chr = String.fromCharCode(keynum);
 
-  if ((chr < '0' || chr > '9') && keynum != 8 && chr != 'x' && chr !='/' && chr != '=') {
+  if ((chr < '0' || chr > '9') && keynum != 8 && chr != 'x' && chr !='/' && chr != '^' && chr != '=') {
     e.preventDefault ? e.preventDefault() : e.returnValue = false;
     return;
   }
@@ -212,7 +223,7 @@ function myKeyPress(e)
   }
   else
     s = edValue.value+chr;
-  var numbers = s.split(/\/|x|=/);
+  var numbers = s.split(/\/|x|=|\^/);
   if ((window.event && numbers.length >= 2 && chr == '=') || numbers.length >= 3)  {	// split behaves differently for IR
     if (chr != '=') {
       e.preventDefault ? e.preventDefault() : e.returnValue = false;
@@ -224,10 +235,19 @@ function myKeyPress(e)
 //    alert(s.indexOf('x') != -1);
     if (s.indexOf('x') != -1) {
       result = i1 * i2;
+      if (result > 20000) { alert("That's too big a number for my little brain, try again."); return; }
+      draw3Numbers(i1,i2,result);
+      document.getElementById("testText").innerHTML = edValue.value + chr + result;
+    }
+    else
+    if (s.indexOf('^') != -1) {
+      result = Math.pow(i1,  i2);
+      if (result > 20000) { alert("That's too big a number for my little brain, try again."); return; }
       draw3Numbers(i1,i2,result);
       document.getElementById("testText").innerHTML = edValue.value + chr + result;
     }
     else {
+      if (i1 > 20000 || i2 > 20000) { alert("That's too big a number for my little brain, try again."); return; }
       rmdr = i1%i2;
       result = (i1-rmdr)/i2;
       draw4Numbers(i1,i2,result, rmdr);
@@ -287,15 +307,16 @@ $(document).ready(function () {
   <i>Examples: <br/>
     2x3=<br/>
     12/3=<br/>
+    3^3=  (for exponents)<br/>
   </i>
   </p>
   <table >
   <tr>
     <td colspan='4'>
       <div style="float: left;">
-      <input id="edValue" type="text" autofocus="autofocus" onkeypress="return myKeyPress(event)"><br/>
+      <input id="edValue" type="text" autofocus="autofocus" style="float: right; font-size: 32;" onkeypress="return myKeyPress(event)"><br/>
       </div>
-      <div style="float: right;" id="testText"></div>      
+      <div style="float: right; font-size: 32;" id="testText"> </div>      
     </td>
   </tr>
   <tr>
