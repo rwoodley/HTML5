@@ -26,6 +26,16 @@
         <script src="wheel.js"></script>
         <script src="utils.js"></script>
         <script src="WaterShader.js"></script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+          ga('create', 'UA-41066114-1', 'rwoodley.org');
+          ga('send', 'pageview');
+        
+        </script>
 
 		<script>
 
@@ -89,13 +99,13 @@
         render_stats.domElement.style.position = 'absolute';
         render_stats.domElement.style.top = '1px';
         render_stats.domElement.style.zIndex = 100;
-        document.getElementById('container').appendChild(render_stats.domElement);
+        //document.getElementById('container').appendChild(render_stats.domElement);
     
         physics_stats = new Stats();
         physics_stats.domElement.style.position = 'absolute';
         physics_stats.domElement.style.top = '50px';
         physics_stats.domElement.style.zIndex = 100;
-        document.getElementById('container').appendChild(physics_stats.domElement);
+        //document.getElementById('container').appendChild(physics_stats.domElement);
     }
 
     var _matrix = new THREE.Matrix4();
@@ -115,7 +125,7 @@
         if (_wheel.rotation.z < 0) _wheel.rotation.z += 2 * Math.PI;
         doDroplets(_waterY, _wheel.rotation.z, _tick, _scene, _shaderMaterial);
         //rotateCameraY(_camera, Math.PI/512);
-        _textElement.innerHTML = "<nobr>(" + Math.floor(_camera.position.x) + "," + Math.floor(_camera.position.y) + ","  + Math.floor(_camera.position.z) + ")</nobr>" ;
+        //_textElement.innerHTML = "<nobr>(" + Math.floor(_camera.position.x) + "," + Math.floor(_camera.position.y) + ","  + Math.floor(_camera.position.z) + ")</nobr>" ;
         _scene.simulate(undefined, 1);
         _renderer.render( _scene, _camera );
         //_renderer.render( _sceneCube, _camera );
